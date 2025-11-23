@@ -1,0 +1,2092 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iMontage</title>
+    <link rel="icon" href="./assets/icons/iMontage_logo.png">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+    <style>
+        /* 娣诲姞骞虫粦杩囨浮鏁堟灉 */
+        .group:hover .group-hover\:block {
+            display: block !important;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(
+                135deg,
+                rgba(253,145,57,0.15) 0%,
+                rgba(250,64,85,0.15) 33%,
+                rgba(126,56,185,0.15) 66%,
+                rgba(28,126,235,0.15) 100%
+
+            );
+            animation: gradientAnim 10s ease infinite;
+        }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            50% { opacity: 0.2; }
+        }
+
+        .hover-3d {
+            transition: transform 0.3s ease;
+        }
+        .hover-3d:hover {
+            transform: translateY(-5px) rotateX(5deg);
+        }
+
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    
+    <nav id="main-nav" class="fixed top-0 left-0 right-0 w-full z-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-2xl font-bold text-white">iMontage</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="" class="text-white/80 hover:text-white px-3 py-2">Paper</a>
+                        <a href="" class="text-white/80 hover:text-white px-3 py-2">GitHub</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="gradient-bg min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+                    <span style="background-image: linear-gradient(to right, 
+                            rgba(253,145,57,0.8) 0%,
+                            rgba(250,64,85,0.8) 33%,
+                            rgba(126,56,185,0.8) 66%,
+                            rgba(28,126,235,0.8) 100%
+                        );
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        color: transparent;">
+                        iMontage
+                    </span>
+                    <br>
+                </h1>
+                <p class="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+                    iMontage: Unified, Versatile, Highly Dynamic Many-to-many Image Generation
+                </p>
+                <div class="text-gray-700 mb-10 max-w-2xl mx-auto space-y-2">
+                    <div class="text-lg font-medium">
+                        <span class="text-black">
+                            <a href="https://scholar.google.com/citations?user=6bdPeKcAAAAJ">Zhoujie Fu</a><sup>1,2</sup>,
+                            <a href="https://scholar.google.com/citations?user=tgDc0fsAAAAJ">Xianfang Zeng</a><sup>2</sup>,
+                            <a href="https://github.com/Blue2Giant">Jinghong Lan</a><sup>2</sup>,
+                            <a href="https://github.com/leoisufa">Xinyao Liao</a><sup>1,2</sup>,
+                            <br>
+                            <a href="https://scholar.google.com/citations?user=nNQU71kAAAAJ">Cheng Chen</a><sup>1</sup>,
+                            <a href="https://sotamak1r.github.io/">Junyi Chen</a><sup>3</sup>,
+                            <a href="https://plusmultiply.github.io/">Jiacheng Wei</a><sup>1</sup>,
+                            <a href="https://wchengad.github.io/">Wei Cheng</a><sup>2</sup>,
+                            <a href="https://scholar.google.com/citations?user=sdG51-sAAAAJ">Shiyu Liu</a><sup>2</sup>,
+                            <br>
+                            <a href="https://www.linkedin.cn/in/unochenyn">Yunuo Chen</a><sup>2,3</sup>,
+                            <a href="https://www.skicyyu.org/">Gang YU</a><sup>†</sup>, 
+                            <a href="https://guosheng.github.io/">Guosheng Lin</a><sup>†</sup> 
+                        </span> 
+                        <br>
+                        <span class="text-sm">
+                            <sup>1</sup>Nanyang Technology University,
+                            <sup>2</sup>StepFun,
+                            <sup>3</sup>Shanghai Jiao Tong University, 
+                            <br>
+                            <sup>†</sup>Corresponding Author
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="space-y-6">
+                <figure class="space-y-4">
+                    <img src="./assets/images/teaser.png" 
+                         alt="DeepVerse Architecture Overview" 
+                         class="w-full h-auto rounded-xl shadow-lg object-cover">
+                </figure>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Demo Video Section -->
+    <div class="bg-white py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Demo Video</h2>
+                <p class="text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Discover the power of iMontage through our comprehensive demonstration video showcasing unified, versatile, and highly dynamic many-to-many image generation capabilities.
+                </p>
+            </div>
+            <div class="flex justify-center">
+                <div class="w-full max-w-4xl">
+                    <div class="relative aspect-video rounded-xl overflow-hidden shadow-2xl">
+                        <video 
+                            controls 
+                            preload="metadata"
+                            class="w-full h-full object-cover bg-black"
+                            poster=""
+                        >
+                            <source src="assets/videos/demo/iMontage_demo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pipeline Section -->
+    <div class="bg-gray-50 py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Method Overview</h2>
+                <p class="text-gray-600 mb-8 max-w-5xl mx-auto text-justify">
+                    <b>Overview of iMontage.</b> The model accepts a flexible set of reference images and produces <span style="color: #f97316;" class="font-bold">N</span> outputs conditioned on a text prompt. Images are encoded by a 3D VAE separately, text by a language model, and both token streams are processed by an MMDiT. We concatenate clean reference-image tokens with noisy target tokens before denoising. <i>Right:</i> training uses fixed-length text tokens and variable-length image/noise tokens, transitions from dual stream to single stream blocks. For image branch, we apply <i>Marginal RoPE</i>, a head鈥搕ail temporal indexing that separates input and output pseudo-frames, preserves spatial RoPE, and supports many-to-many generation. In figure, notation H and W with subscription denote the height/width indices of the 2D RoPE computed at the image鈥檚 native resolution, while notation T represents assigned time index for temporal dimension.
+                </p>
+            </div>
+            <figure class="space-y-4">
+                <img src="assets/images/pipeline.jpg" 
+                     alt="iMontage Pipeline" 
+                     class="w-full h-auto rounded-xl shadow-lg">
+            </figure>
+        </div>
+    </div>
+
+    <!-- Features Grid -->
+    <!-- <div class="bg-white py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <h2 class="text-3xl font-bold mb-4">Key Capabilities</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="hover-3d p-8 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
+                        </svg>                          
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">General Control</h3>
+                    <p class="text-gray-600">
+                        Employ textual representations as a more general control modality
+                    </p>
+                </div>
+                <div class="hover-3d p-8 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Dynamic & Physical</h3>
+                    <p class="text-gray-600">
+                        Formulates dynamics-aware and physics-constrained probabilistic distributions
+                    </p>
+                </div>
+                <div class="hover-3d p-8 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">4D Representation</h3>
+                    <p class="text-gray-600">
+                        Achieve temporal coherence and long-term memory by modeling the 4D representation distribution
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Image Editing Section -->
+    <div class="bg-white py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Image Editing</h2>
+            </div>
+            <div class="relative" id="image-editing-carousel">
+                <!-- Slides Wrapper -->
+                <div class="overflow-hidden">
+                    <div class="flex transition-transform duration-500 ease-in-out" id="carousel-track">
+                        <!-- Slide 1 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                                <!-- Case 1 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/add/4.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointe video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/add/4.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Add sunglasses</span>
+                                    </div>
+                                </div>
+                                <!-- Case 2 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/background/2.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/background/2.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Change the background to beach</span>
+                                    </div>
+                                </div>
+                                <!-- Case 3 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/color_change/2.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/color_change/2.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Turn tomatoes yellow</span>
+                                    </div>
+                                </div>
+                                <!-- Case 4 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/material/2.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/material/2.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Change material to paper</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                                <!-- Case 5 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/style/2.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/style/2.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Change to japanese anime style</span>
+                                    </div>
+                                </div>
+                                <!-- Case 6 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/motion/2.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/motion/2.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Make the girl dance</span>
+                                    </div>
+                                </div>
+                                <!-- Case 7 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/remove/1.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/remove/1.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Remove the woman</span>
+                                    </div>
+                                </div>
+                                <!-- Case 8 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/replace/3.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/replace/3.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Replace the content in her hand to a red paper heart</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                                <!-- Case 9 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/color_change/7.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/color_change/7.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Change cups' color to red</span>
+                                    </div>
+                                </div>
+                                <!-- Case 10 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/material/4.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/material/4.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Change the material of outfit to marble</span>
+                                    </div>
+                                </div>
+                                <!-- Case 11 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/motion/1.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/motion/1.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Make the woman look straight to camera and smile.</span>
+                                    </div>
+                                </div>
+                                <!-- Case 12 -->
+                                <div class="relative group">
+                                    <video 
+                                        poster="assets/vis_results/image_editing/static_res/replace/5.png"
+                                        class="w-full h-auto rounded-lg shadow-lg cursor-pointer video-hover-play object-cover aspect-square"
+                                        muted
+                                        playsinline
+                                        preload="none"
+                                    >
+                                        <source src="assets/vis_results/image_editing/vid_res/replace/5.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none rounded-lg">
+                                        <span class="text-white text-xl font-bold text-center px-4">Replace to sci-wire-frame equipment</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Dots -->
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-gray-800 focus:outline-none transition-colors duration-200 carousel-dot" onclick="goToSlide(0)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 carousel-dot" onclick="goToSlide(1)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 carousel-dot" onclick="goToSlide(2)"></button>
+                </div>
+                
+                <!-- Arrows -->
+                <button class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="prevSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="nextSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- In-context Generation Section -->
+    <div class="bg-gray-50 py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">In-context Generation</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    iMontage can synthesize high-quality images that preserve the identity and style of multiple reference images.
+                </p>
+            </div>
+            
+            <div class="relative" id="in-context-carousel">
+                <!-- Slides Wrapper -->
+                <div class="overflow-hidden">
+                    <div class="flex transition-transform duration-500 ease-in-out" id="in-context-track">
+                        <!-- Slide 1 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                                <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                                    <!-- Input Side -->
+                                    <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Reference Images & Prompt</h3>
+                                        
+                                        <div class="flex-1 flex flex-col justify-center space-y-8">
+                                            <!-- Images Grid -->
+                                            <div class="grid grid-cols-3 gap-4">
+                                                <div class="group relative overflow-hidden rounded-lg shadow-sm">
+                                                    <img src="assets/vis_results/CRef/ref/1/1.jpg" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-sm">
+                                                    <img src="assets/vis_results/CRef/ref/1/2.jpg" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-sm">
+                                                    <img src="assets/vis_results/CRef/ref/1/3.jpg" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                                                </div>
+                                            </div>
+
+                                            <!-- Prompt Box -->
+                                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative">
+                                                <div class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-blue-400 uppercase tracking-wider">Text Prompt</div>
+                                                <p class="text-gray-600 italic text-center leading-relaxed font-medium">
+                                                    "Have the human from the first picture, the person in image 2, and the person in the third picture stand together, holding a large, ancient map, with the man from the first picture pointing to a spot on the map, all of them leaning in with curiosity and excitement."
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Output Side -->
+                                    <div class="p-8 flex flex-col h-full relative bg-white">
+                                        <!-- Arrow for Desktop -->
+                                        <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                        <div class="flex-1 flex items-center justify-center">
+                                            <img src="assets/vis_results/CRef/result/1.jpg" class="w-full rounded-lg shadow-lg object-cover hover:shadow-2xl transition-shadow duration-300">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                                <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                                    <!-- Input Side -->
+                                    <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Reference Images & Prompt</h3>
+                                        <div class="flex-1 flex flex-col justify-center space-y-8">
+                                            <!-- Images Grid -->
+                                            <!-- Landscape reference images side-by-side to reduce vertical space -->
+                                            <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto w-full">
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/2/1.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 2-1">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/2/2.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 2-2">
+                                                </div>
+                                            </div>
+                                            <!-- Prompt Box -->
+                                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative">
+                                                <div class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-blue-400 uppercase tracking-wider">Text Prompt</div>
+                                                <p class="text-gray-600 italic text-center leading-relaxed font-medium">
+                                                    <!-- 鍦ㄨ繖閲屾浛鎹负绗簩涓渚嬬殑鐪熷疄 Prompt锛屽锛?-->
+                                                    "She gently strokes the cat curled up on her lap in a dimly lit Victorian-style study, where a single vintage lamp casts warm golden light onto the velvet armchair and polished wooden floor. The cat's fur glows subtly in the light, its wide, glistening eyes gazing up at her with a mix of curiosity and trust. Dust particles float visibly in the air, and the shadows of bookshelves stretch across the walls."
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Output Side -->
+                                    <div class="p-8 flex flex-col h-full relative bg-white">
+                                        <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                        <div class="flex-1 flex items-center justify-center">
+                                            <img src="assets/vis_results/CRef/result/2.jpg" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result 2" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                                <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                                    <!-- Input Side -->
+                                    <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Reference Images & Prompt</h3>
+                                        <div class="flex-1 flex flex-col justify-center space-y-8">
+                                            <!-- Reference Images (Portrait -> Side by Side) -->
+                                            <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto w-full">
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/3/1.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 3-1">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/3/2.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 3-2">
+                                                </div>
+                                            </div>
+                                            <!-- Prompt Box -->
+                                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative">
+                                                <div class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-blue-400 uppercase tracking-wider">Text Prompt</div>
+                                                <p class="text-gray-600 italic text-center leading-relaxed font-medium">
+                                                    "Let the human in the second picture sit astride the white horse with a dark mane from the first figure, gently leaning forward to stroke its neck with one hand while the other holds the reins, as golden sunlight filters through nearby trees and casts long shadows across the peaceful grassy meadow."
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Output Side -->
+                                    <div class="p-8 flex flex-col h-full relative bg-white">
+                                        <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                        <div class="flex-1 flex items-center justify-center">
+                                            <img src="assets/vis_results/CRef/result/3.jpg" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result 3" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 4-->
+                        <div class="w-full flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                                <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                                    <!-- Input Side -->
+                                    <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Reference Images & Prompt</h3>
+                                        <div class="flex-1 flex flex-col justify-center space-y-8">
+                                            <!-- Images Grid -->
+                                            <!-- Landscape reference images side-by-side to reduce vertical space -->
+                                            <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto w-full">
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/4/1.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 2-1">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/4/2.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 2-2">
+                                                </div>
+                                            </div>
+                                            <!-- Prompt Box -->
+                                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative">
+                                                <div class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-blue-400 uppercase tracking-wider">Text Prompt</div>
+                                                <p class="text-gray-600 italic text-center leading-relaxed font-medium">
+                                                    <!-- 鍦ㄨ繖閲屾浛鎹负绗簩涓渚嬬殑鐪熷疄 Prompt锛屽锛?-->
+                                                    "The vibrant purple flower is set in a small glass vase on the rustic wooden counter of the cozy store, and the plant with red leaves are arranged beside it, allowing the warm glow of string lights to enhance their colors. Behind the counter, shelves laden with artisanal candles and handmade pottery create a welcoming, homey feel, while the faint smell of fresh coffee drifts in from the adjoining cafe section."
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Output Side -->
+                                    <div class="p-8 flex flex-col h-full relative bg-white">
+                                        <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                        <div class="flex-1 flex items-center justify-center">
+                                            <img src="assets/vis_results/CRef/result/4.jpg" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result 4" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 5 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                                <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                                    <!-- Input Side -->
+                                    <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Reference Images & Prompt</h3>
+                                        <div class="flex-1 flex flex-col justify-center space-y-8">
+                                            <!-- Images Grid -->
+                                            <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto w-full">
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/5/1.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 5-1">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                                    <img src="assets/vis_results/CRef/ref/5/2.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Ref 5-2">
+                                                </div>
+                                            </div>
+                                            <!-- Prompt Box -->
+                                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative">
+                                                <div class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-blue-400 uppercase tracking-wider">Text Prompt</div>
+                                                <p class="text-gray-600 italic text-center leading-relaxed font-medium">
+                                                    "He plays guitar in the place."
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Output Side -->
+                                    <div class="p-8 flex flex-col h-full relative bg-white">
+                                        <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                        <div class="flex-1 flex items-center justify-center">
+                                            <img src="assets/vis_results/CRef/result/5.jpg" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result 5" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 6 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                                <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                                    <!-- Input Side -->
+                                    <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Reference Images & Prompt</h3>
+                                        <div class="flex-1 flex flex-col justify-center space-y-8">
+                                            <!-- Images Grid -->
+                                            <div class="grid grid-cols-3 gap-4">
+                                                <div class="group relative overflow-hidden rounded-lg shadow-sm">
+                                                    <img src="assets/vis_results/CRef/ref/6/1.png" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-sm">
+                                                    <img src="assets/vis_results/CRef/ref/6/2.png" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                                </div>
+                                                <div class="group relative overflow-hidden rounded-lg shadow-sm">
+                                                    <img src="assets/vis_results/CRef/ref/6/3.png" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                                </div>
+                                            </div>
+                                            <!-- Prompt Box -->
+                                            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm relative">
+                                                <div class="absolute -top-3 left-4 bg-white text-blue-400 px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider">Prompt</div>
+                                                <p class="text-gray-600 font-medium leading-relaxed italic">
+                                                    "Confucius from the first image, Moses from the second image and Solon from the last image are having a debate in front of the supreme court."
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Output Side -->
+                                    <div class="p-8 flex flex-col h-full relative bg-white">
+                                        <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                        <div class="flex-1 flex items-center justify-center">
+                                            <img src="assets/vis_results/CRef/result/6.png" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result 6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Dots -->
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-gray-800 focus:outline-none transition-colors duration-200 in-context-dot" onclick="goToInContextSlide(0)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 in-context-dot" onclick="goToInContextSlide(1)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 in-context-dot" onclick="goToInContextSlide(2)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 in-context-dot" onclick="goToInContextSlide(3)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 in-context-dot" onclick="goToInContextSlide(4)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 in-context-dot" onclick="goToInContextSlide(5)"></button>
+                </div>
+                
+                <!-- Arrows -->
+                <button class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="prevInContextSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="nextInContextSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- In-context + Vision Signal Section -->
+    <div class="bg-white py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">In-context + Vision Signal</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Combining reference images with vision signals (depth maps, openpose and canny) for controlled generation.
+                </p>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="flex justify-center space-x-4 mb-8">
+                <button class="px-6 py-2 rounded-full bg-gray-800 text-white font-semibold transition-colors duration-200 vision-tab-btn" onclick="switchVisionTab('depth')">Depth Control</button>
+                <button class="px-6 py-2 rounded-full bg-gray-200 text-gray-600 font-semibold hover:bg-gray-300 transition-colors duration-200 vision-tab-btn" onclick="switchVisionTab('openpose')">OpenPose Control</button>
+                <button class="px-6 py-2 rounded-full bg-gray-200 text-gray-600 font-semibold hover:bg-gray-300 transition-colors duration-200 vision-tab-btn" onclick="switchVisionTab('canny')">Canny Control</button>
+            </div>
+
+            <div class="relative min-h-[500px]">
+                <!-- Case 1: Depth -->
+                <div id="vision-depth" class="vision-tab-content transition-opacity duration-300">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                        <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                            <!-- Input Side -->
+                            <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Reference & Depth Signal</h3>
+                                <div class="flex-1 flex flex-col justify-center space-y-8">
+                                    <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto w-full">
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/1_ref_a.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Reference Image">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">Reference</div>
+                                        </div>
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/1_ref_depth.jpg" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Depth Signal">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">Depth Map</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Output Side -->
+                            <div class="p-8 flex flex-col h-full relative bg-white">
+                                <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </div>
+                                <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                <div class="flex-1 flex items-center justify-center">
+                                    <img src="assets/vis_results/Conditioned_cref/1_results.jpg" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2: OpenPose -->
+                <div id="vision-openpose" class="vision-tab-content hidden transition-opacity duration-300">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                        <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                            <!-- Input Side -->
+                            <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                <h3 class="text-lg font-bold mb-6 text-center text-gray-800">References & OpenPose Signal</h3>
+                                <div class="flex-1 flex flex-col justify-center space-y-8">
+                                    <div class="grid grid-cols-3 gap-3 max-w-xl mx-auto w-full">
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/2_ref_a.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Reference A">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">Ref 1</div>
+                                        </div>
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/2_ref_b.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Reference B">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">Ref 2</div>
+                                        </div>
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/2_ref_openpose.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="OpenPose Signal">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">OpenPose</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Output Side -->
+                            <div class="p-8 flex flex-col h-full relative bg-white">
+                                <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </div>
+                                <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                <div class="flex-1 flex items-center justify-center">
+                                    <img src="assets/vis_results/Conditioned_cref/2_results.jpg" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 3: Canny -->
+                <div id="vision-canny" class="vision-tab-content hidden transition-opacity duration-300">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                        <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                            <!-- Input Side -->
+                            <div class="p-8 flex flex-col h-full bg-gray-50/30">
+                                <h3 class="text-lg font-bold mb-6 text-center text-gray-800">References & Canny Signal</h3>
+                                <div class="flex-1 flex flex-col justify-center space-y-8">
+                                    <div class="grid grid-cols-3 gap-3 max-w-xl mx-auto w-full">
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/3_ref_a.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Reference A">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">Ref 1</div>
+                                        </div>
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/3_ref_b.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Reference B">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">Ref 2</div>
+                                        </div>
+                                        <div class="group relative overflow-hidden rounded-lg shadow-md border-4 border-white">
+                                            <img src="assets/vis_results/Conditioned_cref/3_ref_canny.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" alt="Canny Signal">
+                                            <div class="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs py-1 text-center">Canny</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Output Side -->
+                            <div class="p-8 flex flex-col h-full relative bg-white">
+                                <div class="absolute top-1/2 -left-4 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg border border-gray-100 text-blue-500">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </div>
+                                <h3 class="text-lg font-bold mb-6 text-center text-gray-800">Generated Result</h3>
+                                <div class="flex-1 flex items-center justify-center">
+                                    <img src="assets/vis_results/Conditioned_cref/3_results.jpg" class="w-full rounded-lg shadow-lg border-4 border-white object-cover hover:shadow-2xl transition-shadow duration-300" alt="Result">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Style Reference Section -->
+    <div class="bg-gray-50 py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">
+                    Style Reference Generation
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Seamlessly transfer artistic styles to your content while preserving structure.
+                </p>
+            </div>
+
+            <div class="relative" id="sref-carousel">
+                <!-- Slides Wrapper -->
+                <div class="overflow-hidden py-12">
+                    <div class="flex transition-transform duration-500 ease-in-out" id="sref-track">
+                        <!-- Slide 1 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24">
+                                <!-- Inputs Column -->
+                                <div class="flex flex-col gap-8 relative group">
+                                    <!-- Content Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 -rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -top-4 -left-4 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Content</div>
+                                        <img src="assets/vis_results/sref/1_in.jpg" class="w-full h-full object-cover rounded-xl" alt="Content Reference">
+                                    </div>
+                                    
+                                    <!-- Plus Icon -->
+                                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 border border-gray-100 shadow-xl">
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                    </div>
+
+                                    <!-- Style Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -bottom-4 -right-4 bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Style</div>
+                                        <img src="assets/vis_results/sref/1_style.jpg" class="w-full h-full object-cover rounded-xl" alt="Style Reference">
+                                    </div>
+                                </div>
+
+                                <!-- Arrow -->
+                                <div class="hidden lg:block text-gray-400 animate-pulse">
+                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </div>
+
+                                <!-- Output Column -->
+                                <div class="relative">
+                                    <div class="relative w-80 h-80 md:w-96 md:h-96 transform transition-all duration-500 hover:scale-105 bg-white p-2 rounded-2xl shadow-2xl border border-gray-100">
+                                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg tracking-wide">
+                                            Generated Result
+                                        </div>
+                                        <img src="assets/vis_results/sref/1_out.jpg" class="w-full h-full object-cover rounded-xl" alt="Generated Result">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24">
+                                <!-- Inputs Column -->
+                                <div class="flex flex-col gap-8 relative group">
+                                    <!-- Content Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 -rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -top-4 -left-4 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Content</div>
+                                        <img src="assets/vis_results/sref/2_in.jpg" class="w-full h-full object-cover rounded-xl" alt="Content Reference">
+                                    </div>
+                                    
+                                    <!-- Plus Icon -->
+                                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 border border-gray-100 shadow-xl">
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                    </div>
+
+                                    <!-- Style Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -bottom-4 -right-4 bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Style</div>
+                                        <img src="assets/vis_results/sref/2_style.jpg" class="w-full h-full object-cover rounded-xl" alt="Style Reference">
+                                    </div>
+                                </div>
+
+                                <!-- Arrow -->
+                                <div class="hidden lg:block text-gray-400 animate-pulse">
+                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </div>
+
+                                <!-- Output Column -->
+                                <div class="relative">
+                                    <div class="relative w-80 h-80 md:w-96 md:h-96 transform transition-all duration-500 hover:scale-105 bg-white p-2 rounded-2xl shadow-2xl border border-gray-100">
+                                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg tracking-wide">
+                                            Generated Result
+                                        </div>
+                                        <img src="assets/vis_results/sref/2_out.jpg" class="w-full h-full object-cover rounded-xl" alt="Generated Result">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24">
+                                <!-- Inputs Column -->
+                                <div class="flex flex-col gap-8 relative group">
+                                    <!-- Content Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 -rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -top-4 -left-4 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Content</div>
+                                        <img src="assets/vis_results/sref/3_in.jpg" class="w-full h-full object-cover rounded-xl" alt="Content Reference">
+                                    </div>
+                                    
+                                    <!-- Plus Icon -->
+                                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 border border-gray-100 shadow-xl">
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                    </div>
+
+                                    <!-- Style Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -bottom-4 -right-4 bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Style</div>
+                                        <img src="assets/vis_results/sref/3_style.jpg" class="w-full h-full object-cover rounded-xl" alt="Style Reference">
+                                    </div>
+                                </div>
+
+                                <!-- Arrow -->
+                                <div class="hidden lg:block text-gray-400 animate-pulse">
+                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </div>
+
+                                <!-- Output Column -->
+                                <div class="relative">
+                                    <div class="relative w-80 h-80 md:w-96 md:h-96 transform transition-all duration-500 hover:scale-105 bg-white p-2 rounded-2xl shadow-2xl border border-gray-100">
+                                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg tracking-wide">
+                                            Generated Result
+                                        </div>
+                                        <img src="assets/vis_results/sref/3_out.jpg" class="w-full h-full object-cover rounded-xl" alt="Generated Result">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="w-full flex-shrink-0">
+                            <div class="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24">
+                                <!-- Inputs Column -->
+                                <div class="flex flex-col gap-8 relative group">
+                                    <!-- Content Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 -rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -top-4 -left-4 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Content</div>
+                                        <img src="assets/vis_results/sref/4_in.png" class="w-full h-full object-cover rounded-xl" alt="Content Reference">
+                                    </div>
+                                    
+                                    <!-- Plus Icon -->
+                                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 border border-gray-100 shadow-xl">
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                    </div>
+
+                                    <!-- Style Card -->
+                                    <div class="relative w-64 h-64 transform transition-all duration-500 hover:scale-105 hover:z-20 hover:rotate-0 rotate-6 bg-white p-2 rounded-2xl shadow-xl border border-gray-100">
+                                        <div class="absolute -bottom-4 -right-4 bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">Style</div>
+                                        <img src="assets/vis_results/sref/4_style.png" class="w-full h-full object-cover rounded-xl" alt="Style Reference">
+                                    </div>
+                                </div>
+
+                                <!-- Arrow -->
+                                <div class="hidden lg:block text-gray-400 animate-pulse">
+                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </div>
+
+                                <!-- Output Column -->
+                                <div class="relative">
+                                    <div class="relative w-80 h-80 md:w-96 md:h-96 transform transition-all duration-500 hover:scale-105 bg-white p-2 rounded-2xl shadow-2xl border border-gray-100">
+                                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg tracking-wide">
+                                            Generated Result
+                                        </div>
+                                        <img src="assets/vis_results/sref/4_out.png" class="w-full h-full object-cover rounded-xl" alt="Generated Result">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Dots -->
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-gray-800 focus:outline-none transition-colors duration-200 sref-dot" onclick="goToSrefSlide(0)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 sref-dot" onclick="goToSrefSlide(1)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 sref-dot" onclick="goToSrefSlide(2)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 sref-dot" onclick="goToSrefSlide(3)"></button>
+                </div>
+                
+                <!-- Arrows -->
+                <button class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="prevSrefSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="nextSrefSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- World Exploration Section -->
+    <div class="bg-white py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">World Exploration</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Navigate through scenes by changing perspectives via text descriptions.
+                </p>
+            </div>
+        </div>
+
+        <!-- Journey Flow -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative" id="world-carousel">
+                <div class="overflow-hidden py-12 transition-all duration-500 ease-in-out" id="world-viewport">
+                    <div class="flex transition-transform duration-500 ease-in-out items-start" id="world-track">
+                        <!-- Slide 1 -->
+                        <div class="w-full flex-shrink-0 relative px-4">
+                            <!-- Connecting Line (Desktop) -->
+                            <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-100 -translate-y-1/2 z-0"></div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                                <!-- Step 1: Start -->
+                                <div class="relative group">
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Start View
+                                        </div>
+                                        <img src="assets/vis_results/mv/1_1.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Start View">
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Look left side..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 1
+                                        </div>
+                                        <img src="assets/vis_results/mv/1_2.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 1">
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Turn right..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 2
+                                        </div>
+                                        <img src="assets/vis_results/mv/1_3.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 2">
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Zoom in..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 3
+                                        </div>
+                                        <img src="assets/vis_results/mv/1_4.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="w-full flex-shrink-0 relative px-4">
+                            <!-- Connecting Line (Desktop) -->
+                            <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-100 -translate-y-1/2 z-0"></div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                                <!-- Step 1: Start -->
+                                <div class="relative group">
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Start View
+                                        </div>
+                                        <img src="assets/vis_results/mv/2_1.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Start View">
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Move forward..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 1
+                                        </div>
+                                        <img src="assets/vis_results/mv/2_2.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 1">
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Look right side..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 2
+                                        </div>
+                                        <img src="assets/vis_results/mv/2_3.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 2">
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Zoom in view..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 3
+                                        </div>
+                                        <img src="assets/vis_results/mv/2_4.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="w-full flex-shrink-0 relative px-4">
+                            <!-- Connecting Line (Desktop) -->
+                            <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-100 -translate-y-1/2 z-0"></div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                                <!-- Step 1: Start -->
+                                <div class="relative group">
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Start View
+                                        </div>
+                                        <img src="assets/vis_results/mv/3_1.png" class="w-full aspect-square object-cover rounded-xl" alt="Start View">
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Right side view..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 1
+                                        </div>
+                                        <img src="assets/vis_results/mv/3_2.png" class="w-full aspect-square object-cover rounded-xl" alt="Stop 1">
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Left side view..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 2
+                                        </div>
+                                        <img src="assets/vis_results/mv/3_3.png" class="w-full aspect-square object-cover rounded-xl" alt="Stop 2">
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Zoom in..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 3
+                                        </div>
+                                        <img src="assets/vis_results/mv/3_4.png" class="w-full aspect-square object-cover rounded-xl" alt="Stop 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="w-full flex-shrink-0 relative px-4">
+                            <!-- Connecting Line (Desktop) -->
+                            <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-100 -translate-y-1/2 z-0"></div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                                <!-- Step 1: Start -->
+                                <div class="relative group">
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Start View
+                                        </div>
+                                        <img src="assets/vis_results/mv/4_1.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Start View">
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Step forward..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 1
+                                        </div>
+                                        <img src="assets/vis_results/mv/4_2.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 1">
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Look up to sky..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 2
+                                        </div>
+                                        <img src="assets/vis_results/mv/4_3.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 2">
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Zoom out..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 3
+                                        </div>
+                                        <img src="assets/vis_results/mv/4_4.jpg" class="w-full aspect-square object-cover rounded-xl" alt="Stop 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="w-full flex-shrink-0 relative px-4">
+                            <!-- Connecting Line (Desktop) -->
+                            <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-100 -translate-y-1/2 z-0"></div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                                <!-- Step 1: Start -->
+                                <div class="relative group">
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Start View
+                                        </div>
+                                        <img src="assets/vis_results/mv/5_1.jpg" class="w-full object-cover rounded-xl" style="aspect-ratio: 2/3;" alt="Start View">
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Lean back..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 1
+                                        </div>
+                                        <img src="assets/vis_results/mv/5_2.jpg" class="w-full object-cover rounded-xl" style="aspect-ratio: 2/3;" alt="Stop 1">
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Move forward..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 2
+                                        </div>
+                                        <img src="assets/vis_results/mv/5_3.jpg" class="w-full object-cover rounded-xl" style="aspect-ratio: 2/3;" alt="Stop 2">
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 -->
+                                <div class="relative group">
+                                    <div class="md:hidden flex justify-center my-4 text-gray-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:-translate-y-2">
+                                        <div class="absolute top-3 left-3 hidden md:block z-20">
+                                            <span class="bg-white text-gray-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md border border-gray-200 whitespace-nowrap flex items-center gap-2">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                "Keep going..."
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg whitespace-nowrap z-20">
+                                            Stop 3
+                                        </div>
+                                        <img src="assets/vis_results/mv/5_4.jpg" class="w-full object-cover rounded-xl" style="aspect-ratio: 2/3;" alt="Stop 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Dots -->
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-gray-800 focus:outline-none transition-colors duration-200 world-dot" onclick="goToWorldSlide(0)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 world-dot" onclick="goToWorldSlide(1)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 world-dot" onclick="goToWorldSlide(2)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 world-dot" onclick="goToWorldSlide(3)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 world-dot" onclick="goToWorldSlide(4)"></button>
+                </div>
+                
+                <!-- Arrows -->
+                <button class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block z-30" onclick="prevWorldSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block z-30" onclick="nextWorldSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Storyboard Generation Section -->
+    <div class="bg-gray-50 py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Storyboard Generation</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Generate consistent storyboards from character references with specific narrative descriptions.
+                </p>
+            </div>
+
+            <div class="relative" id="storyboard-carousel">
+                <div class="overflow-hidden pb-12 pt-2">
+                    <div class="flex transition-transform duration-500 ease-in-out" id="storyboard-track">
+                        <!-- Slide 1 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="flex flex-col gap-6">
+                                <!-- Reference (Weakened) -->
+                                <div class="flex flex-col items-center">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Character Reference</span>
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">Japanese Life Story</span>
+                                    </div>
+                                    <div class="bg-white p-1 rounded-lg shadow-sm w-24">
+                                        <img src="assets/vis_results/storyboard/1_ref.png" alt="Character Reference" class="w-full h-auto rounded">
+                                    </div>
+                                </div>
+
+                                <!-- Storyboard -->
+                                <div class="w-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <!-- Frame 1 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/1_res_1.jpg" alt="Story 1" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"A woman in a kimono walks through a lush garden path, holding a red parasol."</p>
+                                        </div>
+                                        <!-- Frame 2 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/1_res_2.jpg" alt="Story 2" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"She kneels down to gently reach out to a white cat on a leaf-covered path."</p>
+                                        </div>
+                                        <!-- Frame 3 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/1_res_3.jpg" alt="Story 3" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"The woman strolls along a sunlit garden path, her parasol casting a shadow behind her."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="flex flex-col gap-6">
+                                <!-- Reference (Weakened) -->
+                                <div class="flex flex-col items-center">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Character Reference</span>
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">Art Portrait</span>
+                                    </div>
+                                    <div class="bg-white p-1 rounded-lg shadow-sm w-24">
+                                        <img src="assets/vis_results/storyboard/2_ref.jpg" alt="Character Reference" class="w-full h-auto rounded">
+                                    </div>
+                                </div>
+
+                                <!-- Storyboard -->
+                                <div class="w-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <!-- Frame 1 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/2_res_1.jpg" alt="Story 1" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"She stands by a sunlit window, enjoying a steaming cup of tea with an open book nearby."</p>
+                                        </div>
+                                        <!-- Frame 2 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/2_res_2.jpg" alt="Story 2" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"She gracefully walks through a sunlit doorway, her dress flowing as she moves."</p>
+                                        </div>
+                                        <!-- Frame 3 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/2_res_3.jpg" alt="Story 3" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"She sits thoughtfully on a plush sofa in a warmly lit room, surrounded by elegant decor."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="flex flex-col gap-6">
+                                <!-- Reference (Weakened) -->
+                                <div class="flex flex-col items-center">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Character Reference</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded-full">Tourist Story</span>
+                                    </div>
+                                    <div class="bg-white p-1 rounded-lg shadow-sm w-24">
+                                        <img src="assets/vis_results/storyboard/3_ref.jpg" alt="Character Reference" class="w-full h-auto rounded">
+                                    </div>
+                                </div>
+
+                                <!-- Storyboard -->
+                                <div class="w-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <!-- Frame 1 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/3_res_1.jpg" alt="Story 1" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"The woman is waiting for the airplane in the airport terminal."</p>
+                                        </div>
+                                        <!-- Frame 2 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/3_res_2.jpg" alt="Story 2" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"She takes in the view from her window seat, marveling at the clouds below."</p>
+                                        </div>
+                                        <!-- Frame 3 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/3_res_3.jpg" alt="Story 3" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"Finally, she arrives at her destination, a beautiful beach."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="flex flex-col gap-6">
+                                <!-- Reference (Weakened) -->
+                                <div class="flex flex-col items-center">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Character Reference</span>
+                                        <span class="px-3 py-1 bg-pink-100 text-pink-800 text-xs font-medium rounded-full">Japanese Anime</span>
+                                    </div>
+                                    <div class="bg-white p-1 rounded-lg shadow-sm w-24">
+                                        <img src="assets/vis_results/storyboard/4_ref.png" alt="Character Reference" class="w-full h-auto rounded">
+                                    </div>
+                                </div>
+
+                                <!-- Storyboard -->
+                                <div class="w-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <!-- Frame 1 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/4_res_1.jpg" alt="Story 1" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"Nezuko sits in a forest peacefully."</p>
+                                        </div>
+                                        <!-- Frame 2 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/4_res_2.jpg" alt="Story 2" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"In the night, Nezuko fights with some wolves, protecting the village."</p>
+                                        </div>
+                                        <!-- Frame 3 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/4_res_3.jpg" alt="Story 3" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"On the victory celebration, Nezuko sings happily in front of a bonfire."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="flex flex-col gap-6">
+                                <!-- Reference (Weakened) -->
+                                <div class="flex flex-col items-center">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Character References</span>
+                                        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">Vintage Film</span>
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <div class="bg-white p-1 rounded-lg shadow-sm w-24">
+                                            <img src="assets/vis_results/storyboard/5_ref_1.png" alt="Character Reference 1" class="w-full h-auto rounded">
+                                        </div>
+                                        <div class="bg-white p-1 rounded-lg shadow-sm w-24">
+                                            <img src="assets/vis_results/storyboard/5_ref_2.png" alt="Character Reference 2" class="w-full h-auto rounded">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Storyboard -->
+                                <div class="w-full">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <!-- Frame 1 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/5_res_1.png" alt="Story 1" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"Hepbrun carrying the yellow bag, walking elegantly in the street of a beautiful Italian small town."</p>
+                                        </div>
+                                        <!-- Frame 2 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/5_res_2.png" alt="Story 2" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"She holds a pose to the camera, lifts up the yellow bag."</p>
+                                        </div>
+                                        <!-- Frame 3 -->
+                                        <div class="bg-white p-4 rounded-xl shadow-md hover-3d h-full flex flex-col">
+                                            <img src="assets/vis_results/storyboard/5_res_3.png" alt="Story 3" class="w-full h-auto rounded-lg mb-4">
+                                            <p class="text-gray-600 text-center italic flex-grow">"After filming, Hepburn is crowded by a group of fans."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Dots -->
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-gray-800 focus:outline-none transition-colors duration-200 storyboard-dot" onclick="goToStoryboardSlide(0)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 storyboard-dot" onclick="goToStoryboardSlide(1)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 storyboard-dot" onclick="goToStoryboardSlide(2)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 storyboard-dot" onclick="goToStoryboardSlide(3)"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none transition-colors duration-200 storyboard-dot" onclick="goToStoryboardSlide(4)"></button>
+                </div>
+                
+                <!-- Arrows -->
+                <button class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="prevStoryboardSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-gray-800 shadow-lg hover:bg-gray-700 focus:outline-none hidden md:block" onclick="nextStoryboardSlide()">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="py-8 bg-gray-50 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-gray-600">
+                &copy; Zhoujie Fu
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.hover-3d').forEach((el) => observer.observe(el));
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Video Hover Play Logic
+            const videoElements = document.querySelectorAll('.video-hover-play');
+            videoElements.forEach(video => {
+                video.addEventListener('mouseenter', () => {
+                    video.currentTime = 0;
+                    video.play();
+                });
+                
+                video.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                    video.load(); // Reset to poster
+                });
+            });
+
+            // GIF Hover Play Logic
+            const gifImages = document.querySelectorAll('.gif-hover-play');
+            gifImages.forEach(img => {
+                const staticSrc = img.src;
+                const gifSrc = img.dataset.gif;
+                
+                img.addEventListener('mouseenter', () => {
+                    img.src = gifSrc;
+                });
+                
+                img.addEventListener('mouseleave', () => {
+                    img.src = staticSrc;
+                });
+            });
+
+            const nav = document.getElementById('main-nav');
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                 
+                if (currentScroll > 50) {
+                    nav.classList.add('bg-white', 'shadow-md', 'backdrop-blur-md');
+                    nav.classList.remove('bg-transparent');
+                    nav.querySelector('span').classList.replace('text-white', 'text-gray-900');
+                    nav.querySelectorAll('a').forEach(link => {
+                        link.classList.replace('text-white/80', 'text-gray-600');
+                    });
+                } else {
+                    nav.classList.remove('bg-white', 'shadow-md', 'backdrop-blur-md');
+                    nav.classList.add('bg-transparent');
+                    nav.querySelector('span').classList.replace('text-gray-900', 'text-white');
+                    nav.querySelectorAll('a').forEach(link => {
+                        link.classList.replace('text-gray-600', 'text-white/80');
+                    });
+                }
+                
+                lastScroll = currentScroll;
+            });
+        });
+
+        // Carousel Logic
+            let currentSlide = 0;
+            const totalSlides = 3;
+            
+            function updateCarousel() {
+                const track = document.getElementById('carousel-track');
+                const dots = document.querySelectorAll('.carousel-dot');
+                
+                // Update track position
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    if (index === currentSlide) {
+                        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.add('bg-gray-800');
+                    } else {
+                        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.remove('bg-gray-800');
+                    }
+                });
+            }
+
+            function goToSlide(slideIndex) {
+                currentSlide = slideIndex;
+                updateCarousel();
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            }
+            
+            // Expose functions to global scope for onclick handlers
+            window.goToSlide = goToSlide;
+            window.nextSlide = nextSlide;
+            window.prevSlide = prevSlide;
+
+            // In-context Carousel Logic
+            let currentInContextSlide = 0;
+            const totalInContextSlides = 6; // Updated after adding sixth slide
+
+            function updateInContextCarousel() {
+                const track = document.getElementById('in-context-track');
+                const dots = document.querySelectorAll('.in-context-dot');
+                
+                // Update track position
+                track.style.transform = `translateX(-${currentInContextSlide * 100}%)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    if (index === currentInContextSlide) {
+                        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.add('bg-gray-800');
+                    } else {
+                        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.remove('bg-gray-800');
+                    }
+                });
+            }
+
+            function goToInContextSlide(slideIndex) {
+                currentInContextSlide = slideIndex;
+                updateInContextCarousel();
+            }
+
+            function nextInContextSlide() {
+                currentInContextSlide = (currentInContextSlide + 1) % totalInContextSlides;
+                updateInContextCarousel();
+            }
+
+            function prevInContextSlide() {
+                currentInContextSlide = (currentInContextSlide - 1 + totalInContextSlides) % totalInContextSlides;
+                updateInContextCarousel();
+            }
+
+            window.goToInContextSlide = goToInContextSlide;
+            window.nextInContextSlide = nextInContextSlide;
+            window.prevInContextSlide = prevInContextSlide;
+
+            // Vision Signal Tab Logic
+            function switchVisionTab(tabName) {
+                // Hide all content
+                document.querySelectorAll('.vision-tab-content').forEach(el => {
+                    el.classList.add('hidden');
+                    el.classList.remove('block');
+                });
+                
+                // Show selected content
+                const selectedContent = document.getElementById(`vision-${tabName}`);
+                if (selectedContent) {
+                    selectedContent.classList.remove('hidden');
+                    selectedContent.classList.add('block');
+                }
+                
+                // Update buttons
+                const buttons = document.querySelectorAll('.vision-tab-btn');
+                buttons.forEach(btn => {
+                    // Reset all buttons to inactive state
+                    btn.classList.remove('bg-gray-800', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-600', 'hover:bg-gray-300');
+                    
+                    // Check if this button corresponds to the clicked tab
+                    if (btn.getAttribute('onclick').includes(tabName)) {
+                        btn.classList.remove('bg-gray-200', 'text-gray-600', 'hover:bg-gray-300');
+                        btn.classList.add('bg-gray-800', 'text-white');
+                    }
+                });
+            }
+            
+            // Expose to global scope
+            window.switchVisionTab = switchVisionTab;
+
+            // Style Reference Carousel Logic
+            let currentSrefSlide = 0;
+            const totalSrefSlides = 4;
+
+            function updateSrefCarousel() {
+                const track = document.getElementById('sref-track');
+                const dots = document.querySelectorAll('.sref-dot');
+                
+                // Update track position
+                track.style.transform = `translateX(-${currentSrefSlide * 100}%)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    if (index === currentSrefSlide) {
+                        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.add('bg-gray-800');
+                    } else {
+                        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.remove('bg-gray-800');
+                    }
+                });
+            }
+
+            function goToSrefSlide(slideIndex) {
+                currentSrefSlide = slideIndex;
+                updateSrefCarousel();
+            }
+
+            function nextSrefSlide() {
+                currentSrefSlide = (currentSrefSlide + 1) % totalSrefSlides;
+                updateSrefCarousel();
+            }
+
+            function prevSrefSlide() {
+                currentSrefSlide = (currentSrefSlide - 1 + totalSrefSlides) % totalSrefSlides;
+                updateSrefCarousel();
+            }
+
+            window.goToSrefSlide = goToSrefSlide;
+            window.nextSrefSlide = nextSrefSlide;
+            window.prevSrefSlide = prevSrefSlide;
+
+            // World Exploration Carousel Logic
+            let currentWorldSlide = 0;
+            const totalWorldSlides = 5;
+
+            function updateWorldCarousel() {
+                const track = document.getElementById('world-track');
+                const dots = document.querySelectorAll('.world-dot');
+                const viewport = document.getElementById('world-viewport');
+                
+                // Update track position
+                track.style.transform = `translateX(-${currentWorldSlide * 100}%)`;
+                
+                // Update viewport height
+                const slides = track.children;
+                if (slides[currentWorldSlide]) {
+                    const currentSlideHeight = slides[currentWorldSlide].offsetHeight;
+                    const style = window.getComputedStyle(viewport);
+                    const vPadding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+                    viewport.style.height = (currentSlideHeight + vPadding) + 'px';
+                }
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    if (index === currentWorldSlide) {
+                        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.add('bg-gray-800');
+                    } else {
+                        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.remove('bg-gray-800');
+                    }
+                });
+            }
+
+            function goToWorldSlide(slideIndex) {
+                currentWorldSlide = slideIndex;
+                updateWorldCarousel();
+            }
+
+            function nextWorldSlide() {
+                currentWorldSlide = (currentWorldSlide + 1) % totalWorldSlides;
+                updateWorldCarousel();
+            }
+
+            function prevWorldSlide() {
+                currentWorldSlide = (currentWorldSlide - 1 + totalWorldSlides) % totalWorldSlides;
+                updateWorldCarousel();
+            }
+
+            window.goToWorldSlide = goToWorldSlide;
+            window.nextWorldSlide = nextWorldSlide;
+            window.prevWorldSlide = prevWorldSlide;
+
+            // Storyboard Carousel Logic
+            let currentStoryboardSlide = 0;
+            const totalStoryboardSlides = 5;
+
+            function updateStoryboardCarousel() {
+                const track = document.getElementById('storyboard-track');
+                const dots = document.querySelectorAll('.storyboard-dot');
+                
+                // Update track position
+                track.style.transform = `translateX(-${currentStoryboardSlide * 100}%)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    if (index === currentStoryboardSlide) {
+                        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.add('bg-gray-800');
+                    } else {
+                        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.remove('bg-gray-800');
+                    }
+                });
+            }
+
+            function goToStoryboardSlide(slideIndex) {
+                currentStoryboardSlide = slideIndex;
+                updateStoryboardCarousel();
+            }
+
+            function nextStoryboardSlide() {
+                currentStoryboardSlide = (currentStoryboardSlide + 1) % totalStoryboardSlides;
+                updateStoryboardCarousel();
+            }
+
+            function prevStoryboardSlide() {
+                currentStoryboardSlide = (currentStoryboardSlide - 1 + totalStoryboardSlides) % totalStoryboardSlides;
+                updateStoryboardCarousel();
+            }
+
+            window.goToStoryboardSlide = goToStoryboardSlide;
+            window.nextStoryboardSlide = nextStoryboardSlide;
+            window.prevStoryboardSlide = prevStoryboardSlide;
+
+            window.addEventListener('load', () => {
+                // Initialize heights for carousels that need adaptive height
+                updateWorldCarousel();
+            });
+
+            window.addEventListener('resize', () => {
+                updateWorldCarousel();
+            });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,38 @@
+{
+    "0" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the background to a snowy landscape.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/background/1.png"
+        ]
+    },
+    "1" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the background to a beach.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/background/2.png"
+        ]
+    },
+    "2" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the background sky to a starry night.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/background/3.png"
+        ]
+    },
+    "3" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the background to a sunny day.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/background/4.png"
+        ]
+    },
+    "4" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the background to a modern city.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/background/5.png"
+        ]
+    }
+
+}

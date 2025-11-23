@@ -1,0 +1,38 @@
+{
+    "0" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the style of the image to cute 3D objects.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/style/1.png"
+        ]
+    },
+    "1" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the style of the image to japanese anime.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/style/2.png"
+        ]
+    },
+    "2" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the style of the image to Impressionnisme.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/style/3.png"
+        ]
+    },
+    "3" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the style of the image to Vincent van Gogh.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/style/4.png"
+        ]
+    },
+    "4" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the style of the image to Picasso.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/style/5.png"
+        ]
+    }
+
+}

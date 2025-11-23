@@ -1,0 +1,9 @@
+{
+    "0" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the color of yellow cup to blue, and change the color of purple cup to red.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/color_change/7.png"
+        ]
+    }
+}

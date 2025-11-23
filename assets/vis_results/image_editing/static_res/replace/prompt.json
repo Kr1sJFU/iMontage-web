@@ -1,0 +1,38 @@
+{
+    "0" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Replace the sister to a father.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/replace/1.png"
+        ]
+    },
+    "1" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Replace the paper boat to a pinwheel.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/replace/2.png"
+        ]
+    },
+    "2" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Replace the content in the woman's hands to a red paper heart.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/replace/3.png"
+        ]
+    },
+    "3" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Replace the cartoon monkey to a cartoon rabbit.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/replace/4.png"
+        ]
+    },
+    "4" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Replace the sunglasses of the woman to wire-frame glasses.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/replace/5.png"
+        ]
+    }
+
+}

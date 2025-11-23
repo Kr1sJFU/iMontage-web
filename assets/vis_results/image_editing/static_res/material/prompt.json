@@ -1,0 +1,10 @@
+{
+    "0" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Change the material of the lava to silver.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/material/6.png"
+        ]
+    }
+
+}

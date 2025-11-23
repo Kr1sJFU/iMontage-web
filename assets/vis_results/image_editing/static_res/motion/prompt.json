@@ -1,0 +1,17 @@
+{
+    "3" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Make the man wave his hands.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/motion/4.png"
+        ]
+    },
+    "4" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Make the lion close.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/motion/5.png"
+        ]
+    }
+
+}

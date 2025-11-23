@@ -1,0 +1,10 @@
+{
+    "0" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Remove the person.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/remove/1.png"
+        ]
+    }
+
+}

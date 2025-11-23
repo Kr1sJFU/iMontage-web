@@ -1,0 +1,9 @@
+{
+    "0" :
+    {
+        "prompts" : "Please output 1 image according to the instruction: Add several cars to the highway street.",
+        "images" : [
+            "/workspace/ICLR2026/testspace/image_editing_demo/add/6.png"
+        ]
+    }
+}
